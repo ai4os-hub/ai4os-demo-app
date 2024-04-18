@@ -1,9 +1,20 @@
 {
     "title": "ai4os-demo-app",
-    "summary": "A demo application to test (eg. DEEPaaS testing). Does not contain any AI code.",
+    "summary": "A toy application for demo and testing purposes. We just implement dummy inference/training, ie. we return the same inputs we are fed. The module does not contain any AI code.",
     "description": [
-        "ai4os_demo_app is an application using the DEEPaaS API.\n",
-        "A demo application to test (eg. DEEPaaS testing). Does not contain any AI code."
+        "It can serve as a reference implementation of current best practices in the project (mirroring the [DEEP template](https://github.com/ai4os/ai4-template)).\n",
+
+        "This demo module implements:\n",
+        "* **dummy inference**, ie. we return the same inputs we are fed. If some input is not fed we generate a default one. \n",
+        "* **dummy training**, ie. we sleep for some time and output some random monitoring metrics. \n",
+
+        "The two branches in this repo cover the two main usecases: \n",
+        "* `master`: this is a reference implementation on how to return a JSON response for predict(). \n",
+        "* `return-files`: this is a reference implementation on how to return non-JSON responses for predict(). \n",
+        "  This is particularly useful when returning: \n",
+        "  - long responses (that could better fit better in a txt file), \n",
+        "  - media files (eg. returning an image), \n",
+        "  - multiple files (for example returning an image and a text file at the same time, packing them into a zip file)."
     ],
     "keywords": [
         "docker",
@@ -11,6 +22,9 @@
     ],
     "license": "MIT",
     "date_creation": "2024-03-26",
+    "training_files_url": "http://add-some-url-where-training-files-are-stored.com",
+    "dataset_url": "http://add-some-url-pointing-to-your-dataset.com",
+    "cite_url": "http://add-some-DOI-url.com",
     "sources": {
 		"dockerfile_repo": "https://github.com/ai4os-hub/ai4os-demo-app",
 		"docker_registry_repo": "ai4oshub/ai4os-demo-app",
