@@ -1,0 +1,37 @@
+{
+    "title": "ai4os-demo-app",
+    "summary": "A demo application to test (eg. DEEPaaS testing). Does not contain any AI code.",
+    "description": [
+        "ai4os_demo_app is an application using the DEEPaaS API.\n",
+        "A demo application to test (eg. DEEPaaS testing). Does not contain any AI code."
+    ],
+    "keywords": [
+        "docker",
+        "api-v2"
+    ],
+    "license": "MIT",
+    "date_creation": "2024-03-26",
+    "sources": {
+		"dockerfile_repo": "https://github.com/ai4os-hub/ai4os-demo-app",
+		"docker_registry_repo": "ai4oshub/ai4os-demo-app",
+		"code": "https://github.com/ai4os-hub/ai4os-demo-app",
+		"ai4_template": "ai4-template/2.0.0"
+    },
+    "continuous_integration": {
+        "build_status_badge": "https://jenkins.services.ai4os.eu/buildStatus/icon?job=AI4OS-hub/ai4os-demo-app/main",
+        "build_status_url": "https://jenkins.services.ai4os.eu/job/AI4OS-hub/job/ai4os-demo-app/job/main/"
+    },
+    "tosca": [
+        {
+            "title": "Mesos (CPU)",
+            "url": "https://raw.githubusercontent.com/indigo-dc/tosca-templates/master/deep-oc/deep-oc-marathon-webdav.yml",
+            "inputs": [
+                "rclone_conf",
+                "rclone_url",
+                "rclone_vendor",
+                "rclone_user",
+                "rclone_pass"
+            ]
+        }
+    ]
+}
