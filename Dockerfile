@@ -7,10 +7,10 @@
 # or using default args:
 # $ docker build -t <dockerhub_user>/<dockerhub_repo> .
 #
-# Be Aware! For the Jenkins CI/CD pipeline, 
+# Be Aware! For the Jenkins CI/CD pipeline,
 # input args are defined inside the JenkinsConstants.groovy, not here!
 
-ARG tag=2.9.1
+ARG tag=2.16.1
 
 # Base image, e.g. tensorflow/tensorflow:2.9.1
 FROM tensorflow/tensorflow:${tag}
@@ -30,17 +30,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
         git \
         curl \
         nano \
+        psmisc \
     && rm -rf /var/lib/apt/lists/*
 
-# Update python packages
-# [!] Remember: DEEP API V2 only works with python>=3.6
-RUN python3 --version && \
-    pip3 install --no-cache-dir --upgrade pip "setuptools<60.0.0" wheel
-
-# TODO: remove setuptools version requirement when [1] is fixed
-# [1]: https://github.com/pypa/setuptools/issues/3301
-
-# Set LANG environment
+    # Set LANG environment
 ENV LANG C.UTF-8
 
 # Set the working directory
