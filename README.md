@@ -1,7 +1,27 @@
 # ai4os-demo-app
-[![Build Status](https://jenkins.services.ai4os.eu/buildStatus/icon?job=AI4OS-hub/ai4os-demo-app/main)](https://jenkins.services.ai4os.eu/job/AI4OS-hub/job/ai4os-demo-app/job/main/)
 
-A demo application to test (eg. DEEPaaS testing). Does not contain any AI code.
+[![Build Status](https://jenkins.services.ai4os.eu/buildStatus/icon?job=AI4OS-hub/ai4os-demo-app/main)](https://jenkins.services.ai4os.eu/job/AI4OS-hub/job/ai4os-demo-app/job/main/)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+
+A _minimal_ toy application for demo and testing purposes.
+It can serve as a reference implementation of current best practices in the project (mirroring the [DEEP template](https://github.com/ai4os/ai4-template)).
+
+This demo module implements:
+* **dummy inference**, ie. we return the same inputs we are fed. If some input is not fed we generate a default one.
+* **dummy training**, ie. we sleep for some time and output some random monitoring metrics.
+
+Samples for media files are provided in `./data`.
+
+The two branches in this repo cover the two main usecases:
+* [main](https://github.com/ai4os-hub/ai4os-demo-app/blob/main/ai4os_demo_app/api.py): this is a reference implementation on how to return a JSON response for `predict()`.
+* [return-files](https://github.com/ai4os-hub/ai4os-demo-app/blob/return-files/ai4os_demo_app/api.py): this is a reference implementation on how to return non-JSON responses for `predict()`. This is particularly useful when returning:
+     - long responses (that could better fit better in a `txt` file),
+     - media files (eg. returning an image),
+     - multiple files (for example returning an image and a text file at the same time, packing them into a zip file).
+
+The `train()` function is common for both branches.
+
+## Usage
 
 To launch it, first install the package then run [deepaas](https://github.com/ai4os/DEEPaaS):
 ```bash
