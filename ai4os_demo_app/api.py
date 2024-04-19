@@ -97,11 +97,11 @@ def train(**kwargs):
         time.sleep(1.)
         writer.add_scalar(  # fake loss with random noise
             "scalars/loss",
-            - math.log(epoch + 1) * (1 + random() * 0.2),
+            - math.log(epoch + 1) * (1 + random() * 0.2),  # nosec
             epoch)
         writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
             "scalars/accuracy",
-            min((1 - 1/ (epoch+1)) * (1 + random() * 0.1), 1),
+            min((1 - 1/ (epoch+1)) * (1 + random() * 0.1), 1),  # nosec
             epoch)
     writer.close()
 
@@ -189,7 +189,7 @@ def predict(**kwargs):
     kwargs["demo-dict"] = json.loads(kwargs["demo-dict"])
 
     # Add labels and random probalities to output as mock
-    prob = [random() for _ in range(5)]
+    prob = [random() for _ in range(5)]  # nosec
     kwargs["probabilities"] = [i / sum(prob) for i in prob]
     kwargs["labels"] = ["class2", "class3", "class0", "class1", "class4"]
 
