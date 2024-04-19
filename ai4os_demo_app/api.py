@@ -86,7 +86,8 @@ def get_train_args():
 
 def train(**kwargs):
     """
-    Dummy training. We just sleep for some number of epochs (1 epoch = 1 second)
+    Dummy training. We just sleep for some number of epochs
+    (1 epoch = 1 second)
     mimicking some computation taking place.
     We log some random metrics in Tensorboard to mimic monitoring.
     """
@@ -101,7 +102,7 @@ def train(**kwargs):
             epoch)
         writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
             "scalars/accuracy",
-            min((1 - 1/ (epoch+1)) * (1 + random() * 0.1), 1),  # nosec
+            min((1 - 1 / (epoch + 1)) * (1 + random() * 0.1), 1),  # nosec
             epoch)
     writer.close()
 
