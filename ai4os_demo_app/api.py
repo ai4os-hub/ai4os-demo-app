@@ -156,24 +156,24 @@ def get_predict_args():
             required=False,
             missing=[0.1, 0.2, 0.3],
         ),
-        "demo_image": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="image",  # description needed to be parsed by UI
-        ),
-        "demo_audio": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="audio",  # description needed to be parsed by UI
-        ),
-        "demo_video": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="video",  # description needed to be parsed by UI
-        ),
+        # "demo_image": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="image",  # description needed to be parsed by UI
+        # ),
+        # "demo_audio": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="audio",  # description needed to be parsed by UI
+        # ),
+        # "demo_video": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="video",  # description needed to be parsed by UI
+        # ),
     }
     # fmt: on
     return arg_dict
@@ -194,12 +194,12 @@ def predict(**kwargs):
     kwargs["probabilities"] = [i / sum(prob) for i in prob]
     kwargs["labels"] = ["class2", "class3", "class0", "class1", "class4"]
 
-    # Read media files and return them back in base64
-    for k in ["demo_image", "demo_audio", "demo_video"]:
-        with open(kwargs[k].filename, "rb") as f:
-            media = f.read()
-        media = base64.b64encode(media)  # bytes
-        kwargs[k] = media.decode("utf-8")  # string (in utf-8)
+    # # Read media files and return them back in base64
+    # for k in ["demo_image", "demo_audio", "demo_video"]:
+    #     with open(kwargs[k].filename, "rb") as f:
+    #         media = f.read()
+    #     media = base64.b64encode(media)  # bytes
+    #     kwargs[k] = media.decode("utf-8")  # string (in utf-8)
 
     return kwargs
 
@@ -214,15 +214,15 @@ schema = {
     "demo_bool": fields.Bool(),
     "demo_dict": fields.Dict(),
     "demo_list_of_floats": fields.List(fields.Float()),
-    "demo_image": fields.Str(
-        description="image"  # description needed to be parsed by UI
-    ),
-    "demo_audio": fields.Str(
-        description="audio"  # description needed to be parsed by UI
-    ),
-    "demo_video": fields.Str(
-        description="video"  # description needed to be parsed by UI
-    ),
+    # "demo_image": fields.Str(
+    #     description="image"  # description needed to be parsed by UI
+    # ),
+    # "demo_audio": fields.Str(
+    #     description="audio"  # description needed to be parsed by UI
+    # ),
+    # "demo_video": fields.Str(
+    #     description="video"  # description needed to be parsed by UI
+    # ),
     "labels": fields.List(fields.Str()),
     "probabilities": fields.List(fields.Float()),
 }
