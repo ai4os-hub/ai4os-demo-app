@@ -121,54 +121,54 @@ def get_predict_args():
     # WARNING: missing!=None has to go with required=False
     # fmt: off
     arg_dict = {
-        "demo-str": fields.Str(
+        "demo_str": fields.Str(
             required=False,
             missing="some-string",
         ),
-        "demo-str-choice": fields.Str(
+        "demo_str_choice": fields.Str(
             required=False,
             missing="choice2",
             enum=["choice1", "choice2"],
         ),
-        "demo-int": fields.Int(
+        "demo_int": fields.Int(
             required=False,
             missing=1,
         ),
-        "demo-int-range": fields.Int(
+        "demo_int_range": fields.Int(
             required=False,
             missing=50,
             validate=[validate.Range(min=1, max=100)],
         ),
-        "demo-float": fields.Float(
+        "demo_float": fields.Float(
             required=False,
             missing=0.1,
         ),
-        "demo-bool": fields.Bool(
+        "demo_bool": fields.Bool(
             required=False,
             missing=True,
         ),
-        "demo-dict": fields.Str(  # dicts have to be processed as strings
+        "demo_dict": fields.Str(  # dicts have to be processed as strings
             required=False,
             missing='{"a": 0, "b": 1}',  # use double quotes inside dict
         ),
-        "demo-list-of-floats": fields.List(
+        "demo_list_of_floats": fields.List(
             fields.Float(),
             required=False,
             missing=[0.1, 0.2, 0.3],
         ),
-        "demo-image": fields.Field(
+        "demo_image": fields.Field(
             required=True,
             type="file",
             location="form",
             description="image",  # description needed to be parsed by UI
         ),
-        "demo-audio": fields.Field(
+        "demo_audio": fields.Field(
             required=True,
             type="file",
             location="form",
             description="audio",  # description needed to be parsed by UI
         ),
-        "demo-video": fields.Field(
+        "demo_video": fields.Field(
             required=True,
             type="file",
             location="form",
@@ -187,15 +187,15 @@ def predict(**kwargs):
        [1]: https://github.com/deephdc/deepaas_ui
     """
     # Dict are fed as str so have to be converted back
-    kwargs["demo-dict"] = json.loads(kwargs["demo-dict"])
+    kwargs["demo_dict"] = json.loads(kwargs["demo_dict"])
 
-    # Add labels and random probalities to output as mock
+    # Add labels and random probabilities to output as mock
     prob = [random() for _ in range(5)]  # nosec
     kwargs["probabilities"] = [i / sum(prob) for i in prob]
     kwargs["labels"] = ["class2", "class3", "class0", "class1", "class4"]
 
     # Read media files and return them back in base64
-    for k in ["demo-image", "demo-audio", "demo-video"]:
+    for k in ["demo_image", "demo_audio", "demo_video"]:
         with open(kwargs[k].filename, "rb") as f:
             media = f.read()
         media = base64.b64encode(media)  # bytes
@@ -206,21 +206,21 @@ def predict(**kwargs):
 
 # Schema to validate the `predict()` output
 schema = {
-    "demo-str": fields.Str(),
-    "demo-str-choice": fields.Str(),
-    "demo-int": fields.Int(),
-    "demo-int-range": fields.Int(),
-    "demo-float": fields.Float(),
-    "demo-bool": fields.Bool(),
-    "demo-dict": fields.Dict(),
-    "demo-list-of-floats": fields.List(fields.Float()),
-    "demo-image": fields.Str(
+    "demo_str": fields.Str(),
+    "demo_str_choice": fields.Str(),
+    "demo_int": fields.Int(),
+    "demo_int_range": fields.Int(),
+    "demo_float": fields.Float(),
+    "demo_bool": fields.Bool(),
+    "demo_dict": fields.Dict(),
+    "demo_list_of_floats": fields.List(fields.Float()),
+    "demo_image": fields.Str(
         description="image"  # description needed to be parsed by UI
     ),
-    "demo-audio": fields.Str(
+    "demo_audio": fields.Str(
         description="audio"  # description needed to be parsed by UI
     ),
-    "demo-video": fields.Str(
+    "demo_video": fields.Str(
         description="video"  # description needed to be parsed by UI
     ),
     "labels": fields.List(fields.Str()),
