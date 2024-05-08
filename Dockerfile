@@ -20,7 +20,7 @@ LABEL version='0.0.1'
 # A demo application to test (eg. DEEPaaS testing). Does not contain any AI code.
 
 # What user branch to clone [!]
-ARG branch=main
+ARG branch=no_file_args
 
 # Install Ubuntu packages
 # - gcc is needed in Pytorch images because deepaas installation might break otherwise (see docs) (it is already installed in tensorflow images)
@@ -60,6 +60,12 @@ RUN git clone https://github.com/ai4os/deep-start /srv/.deep-start && \
 
 # Necessary for the Jupyter Lab terminal
 ENV SHELL /bin/bash
+
+# Install user app
+RUN git clone -b fix/cli https://github.com/ai4os/deepaas && \
+    cd  deepaas && \
+    pip3 install --no-cache-dir -e . && \
+    cd ..
 
 # Install user app
 RUN git clone -b $branch https://github.com/ai4os-hub/ai4os-demo-app && \
