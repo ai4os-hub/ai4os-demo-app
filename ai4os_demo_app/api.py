@@ -24,8 +24,8 @@ an exemplar module [2].
 [2]: https://github.com/ai4os-hub/ai4os-demo-app
 """
 
+import ast
 import base64
-import json
 import math
 from pathlib import Path
 import pkg_resources
@@ -147,9 +147,11 @@ def get_predict_args():
             required=False,
             missing=True,
         ),
-        "demo_dict": fields.Str(  # dicts have to be processed as strings
+        "demo_dict": fields.Str(
+            # dicts have to be processed as strings
+            # (DEEPaaS Swagger UI throws error otherwise)
             required=False,
-            missing='{"a": 0, "b": 1}',  # use double quotes inside dict
+            missing="{'a': 0, 'b': 1}",
         ),
         "demo_list_of_floats": fields.List(
             fields.Float(),
@@ -187,7 +189,7 @@ def predict(**kwargs):
        [1]: https://github.com/deephdc/deepaas_ui
     """
     # Dict are fed as str so have to be converted back
-    kwargs["demo_dict"] = json.loads(kwargs["demo_dict"])
+    kwargs["demo_dict"] = ast.literal_eval(kwargs["demo_dict"])
 
     # Add labels and random probabilities to output as mock
     prob = [random() for _ in range(5)]  # nosec
