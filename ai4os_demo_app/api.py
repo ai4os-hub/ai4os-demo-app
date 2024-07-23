@@ -42,7 +42,9 @@ from ai4os_demo_app.misc import _catch_error, launch_tensorboard
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 
-@_catch_error
+# TODO: reenable catch error when this issue is fixed
+# https://github.com/ai4os/DEEPaaS/issues/174
+# @_catch_error
 def get_metadata():
     """
     DO NOT REMOVE - All modules should have a get_metadata() function
@@ -181,7 +183,7 @@ def get_predict_args():
     return arg_dict
 
 
-@_catch_error
+# @_catch_error
 def predict(**kwargs):
     """
     Return same inputs as provided. We also add additional fields
