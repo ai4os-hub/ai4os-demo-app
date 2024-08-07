@@ -2,6 +2,7 @@
 
 [![Build Status](https://jenkins.services.ai4os.eu/buildStatus/icon?job=AI4OS-hub/ai4os-demo-app/main)](https://jenkins.services.ai4os.eu/job/AI4OS-hub/job/ai4os-demo-app/job/main/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 A _minimal_ toy application for demo and testing purposes.
 It can serve as a reference implementation of current best practices in the project (mirroring the [DEEP template](https://github.com/ai4os/ai4-template)).
@@ -29,6 +30,11 @@ git clone https://github.com/ai4os-hub/ai4os-demo-app
 cd ai4os-demo-app
 pip install -e .
 deepaas-run --listen-ip 0.0.0.0
+```
+
+To format the code using [Black](https://github.com/psf/black), run:
+```bash
+black ai4os_demo_app
 ```
 
 ## Project structure

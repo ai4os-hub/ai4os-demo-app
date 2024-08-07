@@ -35,8 +35,9 @@ import time
 from tensorboardX import SummaryWriter
 from webargs import fields, validate
 
+from ai4os_demo_app.misc import launch_tensorboard
 
-from ai4os_demo_app.misc import _catch_error, launch_tensorboard
+# from ai4os_demo_app.misc import _catch_error
 
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -97,19 +98,19 @@ def train(**kwargs):
     writer = SummaryWriter(logdir=logdir, flush_secs=1)
     launch_tensorboard(logdir=logdir)
     for epoch in range(kwargs["epoch_num"]):
-        time.sleep(1.)
+        time.sleep(1.0)
         writer.add_scalar(  # fake loss with random noise
-            "scalars/loss",
-            - math.log(epoch + 1) * (1 + random() * 0.2),  # nosec
-            epoch)
+            "scalars/loss", -math.log(epoch + 1) * (1 + random() * 0.2), epoch  # nosec
+        )
         writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
             "scalars/accuracy",
             min((1 - 1 / (epoch + 1)) * (1 + random() * 0.1), 1),  # nosec
-            epoch)
+            epoch,
+        )
     writer.close()
 
     # Write a fake model file
-    (logdir / 'final_model.hdf5').touch()
+    (logdir / "final_model.hdf5").touch()
 
     return {"status": "done", "final accuracy": 0.9}
 
