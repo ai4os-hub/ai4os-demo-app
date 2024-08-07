@@ -126,57 +126,65 @@ def get_predict_args():
         "demo_str": fields.Str(
             required=False,
             missing="some-string",
+            description="test string",
         ),
         "demo_str_choice": fields.Str(
             required=False,
             missing="choice2",
             enum=["choice1", "choice2"],
+            description="test multi-choice with strings",
         ),
         "demo_int": fields.Int(
             required=False,
             missing=1,
+            description="test integer",
         ),
         "demo_int_range": fields.Int(
             required=False,
             missing=50,
             validate=[validate.Range(min=1, max=100)],
+            description="test integer is inside a min-max range",
         ),
         "demo_float": fields.Float(
             required=False,
             missing=0.1,
+            description="test float",
         ),
         "demo_bool": fields.Bool(
             required=False,
             missing=True,
+            description="test boolean",
         ),
         "demo_dict": fields.Str(
-            # dicts have to be processed as strings
-            # (DEEPaaS Swagger UI throws error otherwise)
+            # dicts have to be processed as strings otherwise DEEPaaS Swagger UI
+            # throws an error
             required=False,
             missing="{'a': 0, 'b': 1}",
+            description="test dictionary",
         ),
         "demo_list_of_floats": fields.List(
             fields.Float(),
             required=False,
             missing=[0.1, 0.2, 0.3],
+            description="test list of floats",
         ),
         "demo_image": fields.Field(
             required=True,
             type="file",
             location="form",
-            description="image",  # description needed to be parsed by UI
+            description="test image upload",  # "image" word in description is needed to be parsed by Gradio UI
         ),
         "demo_audio": fields.Field(
             required=True,
             type="file",
             location="form",
-            description="audio",  # description needed to be parsed by UI
+            description="test audio upload",  # "audio" word in description is needed to be parsed by Gradio UI
         ),
         "demo_video": fields.Field(
             required=True,
             type="file",
             location="form",
-            description="video",  # description needed to be parsed by UI
+            description="test video upload",  # "video" word in description is needed to be parsed by Gradio UI
         ),
     }
     # fmt: on
