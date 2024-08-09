@@ -61,10 +61,6 @@ RUN git clone https://github.com/ai4os/deep-start /srv/.deep-start && \
 # Necessary for the Jupyter Lab terminal
 ENV SHELL /bin/bash
 
-# Temporarily install DEEPaaS from "releases/2.x" to have the updates on the CLI
-#TODO: remove when new DEEPaaS 2.5 version is released
-RUN pip install git+https://github.com/ai4os/DEEPaaS.git@releases/2.x
-
 # Install user app
 RUN git clone -b $branch https://github.com/ai4os-hub/ai4os-demo-app && \
     cd  ai4os-demo-app && \
