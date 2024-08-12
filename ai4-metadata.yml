@@ -1,0 +1,20 @@
+metadata_version: 2.0.0
+title: ai4os-demo-app
+summary: A toy application for demo and testing purposes. We just implement dummy inference/training, ie. we return the same inputs we are fed. The module does not contain any AI code.
+description: '"It can serve as a reference implementation of current best practices in the project (mirroring the [DEEP template](https://github.com/ai4os/ai4-template)).\n" "This demo module implements:\n" "* **dummy inference**, ie. we return the same inputs we are fed. If some input is not fed we generate a default one. \n" "* **dummy training**, ie. we sleep for some time and output some random monitoring metrics. \n" "The two branches in this repo cover the two main usecases: \n" "* `master`: this is a reference implementation on how to return a JSON response for predict(). \n" "* `return-files`: this is a reference implementation on how to return non-JSON responses for predict(). \n" "  This is particularly useful when returning: \n" "  - long responses (that could better fit better in a txt file), \n" "  - media files (eg. returning an image), \n" "  - multiple files (for example returning an image and a text file at the same time, packing them into a zip file)."'
+dates:
+  created: '2024-03-26'
+  updated: '2024-08-12'
+links:
+  source_code: https://github.com/ai4os-hub/ai4os-demo-app
+  docker_image: ai4oshub/ai4os-demo-app
+  ai4_template: ai4-template/2.0.0
+  dataset: http://add-some-url-pointing-to-your-dataset.com
+  training_data: null
+  citation: http://add-some-DOI-url.com
+tags:
+- docker
+- api-v2
+tasks: []
+categories: []
+libraries: []
