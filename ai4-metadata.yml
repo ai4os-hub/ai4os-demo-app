@@ -1,6 +1,6 @@
 metadata_version: 2.0.0
 title: ai4os-demo-app
-summary: 
+summary: A toy application for demo and testing purposes. We just implement dummy inference/training, ie. we return the same inputs we are fed. The module does not contain any AI code.
 description: |-
   It can serve as a reference implementation of current best practices in the project (mirroring the [DEEP template](https://github.com/ai4os/ai4-template)).
 
