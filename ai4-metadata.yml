@@ -27,8 +27,14 @@ links:
   training_data: null
   citation: http://add-some-DOI-url.com
 tags:
-  - docker
-  - api-v2
-tasks: []
-categories: []
-libraries: []
+  - demo
+tasks:
+  - Other
+categories:
+  - AI4 trainable
+  - AI4 pre trained
+  - AI4 inference
+libraries:
+  - Other
+data-type:
+  - Other
