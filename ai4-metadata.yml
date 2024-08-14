@@ -16,16 +16,19 @@ description: |-
   - long responses (that could better fit better in a txt file),
   - media files (eg. returning an image),
   - multiple files (for example returning an image and a text file at the same time, packing them into a zip file).
+doi: null
 dates:
   created: '2024-03-26'
   updated: '2024-08-12'
 links:
+  documentation: null
   source_code: https://github.com/ai4os-hub/ai4os-demo-app
   docker_image: ai4oshub/ai4os-demo-app
   ai4_template: ai4-template/2.0.0
   dataset: http://add-some-url-pointing-to-your-dataset.com
-  training_data: null
+  weights: null
   citation: http://add-some-DOI-url.com
+  base_model: null
 tags:
   - demo
 tasks:
