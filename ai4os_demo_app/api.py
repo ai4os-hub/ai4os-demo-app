@@ -26,10 +26,14 @@ an exemplar module [2].
 
 import ast
 import base64
+import json
 import math
+import mimetypes
 from pathlib import Path
 import pkg_resources
 from random import random
+import shutil
+import tempfile
 import time
 
 from tensorboardX import SummaryWriter
@@ -187,6 +191,15 @@ def get_predict_args():
             location="form",
             description="test video upload",  # "video" word in description is needed to be parsed by Gradio UI
         ),
+        # Add format type of the response of predict()
+        # For demo purposes, we allow the user to receive back either JSON, image or zip.
+        # More options for MIME types: https://mimeapplication.net/
+        "accept": fields.Str(
+            required=False,
+            missing="application/json",
+            description="Format of the response.",
+            validate=validate.OneOf(["application/json", "application/zip", "image/*"]),
+        ),
     }
     # fmt: on
     return arg_dict
@@ -197,7 +210,7 @@ def predict(**kwargs):
     """
     Return same inputs as provided. We also add additional fields
     to test the functionality of the Gradio-based UI [1].
-       [1]: https://github.com/deephdc/deepaas_ui
+    [1]: https://github.com/ai4os/deepaas_ui
     """
     # Dict are fed as str so have to be converted back
     kwargs["demo_dict"] = ast.literal_eval(kwargs["demo_dict"])
@@ -207,17 +220,46 @@ def predict(**kwargs):
     kwargs["probabilities"] = [i / sum(prob) for i in prob]
     kwargs["labels"] = ["class2", "class3", "class0", "class1", "class4"]
 
-    # Read media files and return them back in base64
-    for k in ["demo_image", "demo_audio", "demo_video"]:
-        with open(kwargs[k].filename, "rb") as f:
-            media = f.read()
-        media = base64.b64encode(media)  # bytes
-        kwargs[k] = media.decode("utf-8")  # string (in utf-8)
+    # Format the response differently depending on the MIME type selected by the user
+    if kwargs["accept"] == "application/json":
+        # Read media files and return them back in base64
+        for k in ["demo_image", "demo_audio", "demo_video"]:
+            with open(kwargs[k].filename, "rb") as f:
+                media = f.read()
+            media = base64.b64encode(media)  # bytes
+            kwargs[k] = media.decode("utf-8")  # string (in utf-8)
 
-    return kwargs
+        return kwargs
+
+    elif kwargs["accept"] == "application/zip":
+        zip_dir = tempfile.TemporaryDirectory()
+        zip_dir = Path(zip_dir.name)
+        zip_dir.mkdir()
+
+        # Save parameters to JSON file
+        with open(zip_dir / "args.json", "w") as f:
+            json.dump(kwargs, f, sort_keys=True, indent=4)
+
+        # Copy media files to ZIP folder
+        for k in ["demo_image", "demo_audio", "demo_video"]:
+            # Try to guess extension, otherwise take last part of content type
+            ext = mimetypes.guess_extension(kwargs[k].content_type)
+            extension = ext if ext else f".{kwargs[k].content_type.split('/')[-1]}"
+
+            shutil.copyfile(src=kwargs[k].filename, dst=zip_dir / f"{k}{extension}")
+
+        # Pack folder into ZIP file and return it
+        shutil.make_archive(zip_dir, format="zip", root_dir=zip_dir)
+
+        return open(f"{zip_dir}.zip", "rb")
+
+    elif kwargs["accept"] == "image/*":
+        filepath = kwargs["demo_image"].filename
+
+        return open(filepath, "rb")
 
 
-# Schema to validate the `predict()` output
+# Schema to validate the `predict()` output if accept field is "application/json"
 schema = {
     "demo_str": fields.Str(),
     "demo_str_choice": fields.Str(),
@@ -238,4 +280,5 @@ schema = {
     ),
     "labels": fields.List(fields.Str()),
     "probabilities": fields.List(fields.Float()),
+    "accept": fields.Str(),
 }

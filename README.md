@@ -13,14 +13,12 @@ This demo module implements:
 
 Samples for media files are provided in `./data`.
 
-The two branches in this repo cover the two main usecases:
-* [main](https://github.com/ai4os-hub/ai4os-demo-app/blob/main/ai4os_demo_app/api.py): this is a reference implementation on how to return a JSON response for `predict()`.
-* [return-files](https://github.com/ai4os-hub/ai4os-demo-app/blob/return-files/ai4os_demo_app/api.py): this is a reference implementation on how to return non-JSON responses for `predict()`. This is particularly useful when returning:
-     - long responses (that could better fit better in a `txt` file),
-     - media files (eg. returning an image),
-     - multiple files (for example returning an image and a text file at the same time, packing them into a zip file).
+When you do a `PREDICT` inference call, the output will be formatted depending on the `accept` value you provided:
+- `application/json`: you will receive a JSON response
+- `application/zip`: you will receive the output packed as a ZIP file
+- `image/*`: you will receive an image as output
 
-The `train()` function is common for both branches.
+Any other format is supported, though we only demonstrate these ones in this demo module.
 
 ## Usage
 
