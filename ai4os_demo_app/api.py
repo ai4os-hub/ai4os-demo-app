@@ -36,6 +36,7 @@ import shutil
 import tempfile
 import time
 
+from deepaas.model.v2.wrapper import UploadedFile
 from tensorboardX import SummaryWriter
 from webargs import fields, validate
 
@@ -214,6 +215,22 @@ def predict(**kwargs):
     """
     # Dict are fed as str so have to be converted back
     kwargs["demo_dict"] = ast.literal_eval(kwargs["demo_dict"])
+
+    # Check that the main input types are received in the correct Python type
+    arg2type = {
+        "demo_str": str,
+        "demo_int": int,
+        "demo_float": float,
+        "demo_bool": bool,
+        "demo_dict": dict,
+        "demo_image": UploadedFile,
+    }
+    for k, v in arg2type.items():
+        if not isinstance(kwargs[k], v):
+            message = \
+                f"Key {k} is type {type(kwargs[k])}, not type {v}. \n" \
+                f"Value: {kwargs[k]}"
+            raise Exception(message)
 
     # Add labels and random probabilities to output as mock
     prob = [random() for _ in range(5)]  # nosec
