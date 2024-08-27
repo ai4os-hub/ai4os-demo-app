@@ -63,12 +63,11 @@ def get_metadata():
 
     meta_fields = {
         "name": None,
-        "version": None,
-        "summary": None,
-        "home-page": None,
         "author": None,
         "author-email": None,
+        "description": None,
         "license": None,
+        "version": None,
     }
     meta = {}
     for line in pkg.get_metadata_lines("PKG-INFO"):
@@ -79,6 +78,8 @@ def get_metadata():
                 meta[k] = value
 
     return meta
+
+print(get_metadata())
 
 
 def get_train_args():
