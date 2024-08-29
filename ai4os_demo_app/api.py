@@ -79,8 +79,6 @@ def get_metadata():
 
     return meta
 
-print(get_metadata())
-
 
 def get_train_args():
     arg_dict = {
@@ -226,11 +224,13 @@ def predict(**kwargs):
         "demo_dict": dict,
         "demo_image": UploadedFile,
     }
+
     for k, v in arg2type.items():
         if not isinstance(kwargs[k], v):
-            message = \
-                f"Key {k} is type {type(kwargs[k])}, not type {v}. \n" \
+            message = (
+                f"Key {k} is type {type(kwargs[k])}, not type {v}. \n"
                 f"Value: {kwargs[k]}"
+            )
             raise Exception(message)
 
     # Add labels and random probabilities to output as mock
