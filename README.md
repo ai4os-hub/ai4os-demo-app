@@ -30,10 +30,22 @@ pip install -e .
 deepaas-run --listen-ip 0.0.0.0
 ```
 
-To format the code using [Black](https://github.com/psf/black), run:
-```bash
-black ai4os_demo_app
-```
+## Contributing
+
+This module tries to enforce best practices by using [Black](https://github.com/psf/black)
+to format the code.
+
+For an optimal development experience, we recommend installing the VScode extensions
+[Black](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)
+and [Format on Auto Save](https://marketplace.visualstudio.com/items?itemName=BdSoftware.format-on-auto-save).
+Their configurations are automatically included in the [`.vscode`](./.vscode) folder.
+This will format the code during the automatic saves, though you can force formatting with
+`CTRL + Shift + I` (or `CTRL + S` to save).
+
+To enable them only for this repository: after installing, click `Disable`,
+then click `Enable (workspace)`.
+
+In the Black _global_ settings, we also recommend setting `black-formatter.showNotification = off`.
 
 ## Project structure
 ```
