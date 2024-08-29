@@ -142,3 +142,7 @@ GTAGS
 
 # Things specific to this project #
 ###################################
+
+# Ignore files created by tox
+AUTHORS
+ChangeLog
