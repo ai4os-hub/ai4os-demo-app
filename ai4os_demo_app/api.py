@@ -17,8 +17,8 @@ For example:
         resp = postprocess(resp)
         return resp
 
-To start populating this file, take a look at the docs [1] and at
-an exemplar module [2].
+To start populating this file, take a look at the docs [1] and at an exemplar
+module [2].
 
 [1]: https://docs.ai4os.eu/
 [2]: https://github.com/ai4os-hub/ai4os-demo-app
