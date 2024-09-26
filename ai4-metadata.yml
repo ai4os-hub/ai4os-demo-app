@@ -16,7 +16,7 @@ description: |-
   - long responses (that could better fit better in a txt file),
   - media files (eg. returning an image),
   - multiple files (for example returning an image and a text file at the same time, packing them into a zip file).
-doi: http://add-some-DOI-url.com
+doi: https://doi.org/10.5281/zenodo.13343448
 dates:
   created: '2024-03-26'
   updated: '2024-08-12'
@@ -27,7 +27,7 @@ links:
   ai4_template: ai4-template/2.0.0
   dataset: http://add-some-url-pointing-to-your-dataset.com
   weights: http://add-some-weights-url.com
-  citation: http://add-some-DOI-url.com
+  citation: https://doi.org/10.5281/zenodo.13343448
   base_model: http://add-some-link-to-another-model.com
 tags:
   - demo

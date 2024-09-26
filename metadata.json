@@ -24,7 +24,7 @@
     "date_creation": "2024-03-26",
     "training_files_url": "http://add-some-url-where-training-files-are-stored.com",
     "dataset_url": "http://add-some-url-pointing-to-your-dataset.com",
-    "cite_url": "http://add-some-DOI-url.com",
+    "cite_url": "https://doi.org/10.5281/zenodo.13343448",
     "sources": {
 		"dockerfile_repo": "https://github.com/ai4os-hub/ai4os-demo-app",
 		"docker_registry_repo": "ai4oshub/ai4os-demo-app",
