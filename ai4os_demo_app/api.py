@@ -173,24 +173,24 @@ def get_predict_args():
             missing=[0.1, 0.2, 0.3],
             description="test list of floats",
         ),
-        "demo_image": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="test image upload",  # "image" word in description is needed to be parsed by Gradio UI
-        ),
-        "demo_audio": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="test audio upload",  # "audio" word in description is needed to be parsed by Gradio UI
-        ),
-        "demo_video": fields.Field(
-            required=True,
-            type="file",
-            location="form",
-            description="test video upload",  # "video" word in description is needed to be parsed by Gradio UI
-        ),
+        # "demo_image": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="test image upload",  # "image" word in description is needed to be parsed by Gradio UI
+        # ),
+        # "demo_audio": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="test audio upload",  # "audio" word in description is needed to be parsed by Gradio UI
+        # ),
+        # "demo_video": fields.Field(
+        #     required=True,
+        #     type="file",
+        #     location="form",
+        #     description="test video upload",  # "video" word in description is needed to be parsed by Gradio UI
+        # ),
         # Add format type of the response of predict()
         # For demo purposes, we allow the user to receive back either JSON, image or zip.
         # More options for MIME types: https://mimeapplication.net/
@@ -198,7 +198,8 @@ def get_predict_args():
             required=False,
             missing="application/json",
             description="Format of the response.",
-            validate=validate.OneOf(["application/json", "application/zip", "image/*"]),
+            # validate=validate.OneOf(["application/json", "application/zip", "image/*"]),
+            validate=validate.OneOf(["application/json", "application/zip"]),
         ),
     }
     # fmt: on
@@ -222,7 +223,7 @@ def predict(**kwargs):
         "demo_float": float,
         "demo_bool": bool,
         "demo_dict": dict,
-        "demo_image": UploadedFile,
+        # "demo_image": UploadedFile,
     }
 
     for k, v in arg2type.items():
@@ -240,12 +241,12 @@ def predict(**kwargs):
 
     # Format the response differently depending on the MIME type selected by the user
     if kwargs["accept"] == "application/json":
-        # Read media files and return them back in base64
-        for k in ["demo_image", "demo_audio", "demo_video"]:
-            with open(kwargs[k].filename, "rb") as f:
-                media = f.read()
-            media = base64.b64encode(media)  # bytes
-            kwargs[k] = media.decode("utf-8")  # string (in utf-8)
+        # # Read media files and return them back in base64
+        # for k in ["demo_image", "demo_audio", "demo_video"]:
+        #     with open(kwargs[k].filename, "rb") as f:
+        #         media = f.read()
+        #     media = base64.b64encode(media)  # bytes
+        #     kwargs[k] = media.decode("utf-8")  # string (in utf-8)
 
         return kwargs
 
@@ -258,23 +259,23 @@ def predict(**kwargs):
         with open(zip_dir / "args.json", "w") as f:
             json.dump(kwargs, f, sort_keys=True, indent=4)
 
-        # Copy media files to ZIP folder
-        for k in ["demo_image", "demo_audio", "demo_video"]:
-            # Try to guess extension, otherwise take last part of content type
-            ext = mimetypes.guess_extension(kwargs[k].content_type)
-            extension = ext if ext else f".{kwargs[k].content_type.split('/')[-1]}"
+        # # Copy media files to ZIP folder
+        # for k in ["demo_image", "demo_audio", "demo_video"]:
+        #     # Try to guess extension, otherwise take last part of content type
+        #     ext = mimetypes.guess_extension(kwargs[k].content_type)
+        #     extension = ext if ext else f".{kwargs[k].content_type.split('/')[-1]}"
 
-            shutil.copyfile(src=kwargs[k].filename, dst=zip_dir / f"{k}{extension}")
+        #     shutil.copyfile(src=kwargs[k].filename, dst=zip_dir / f"{k}{extension}")
 
         # Pack folder into ZIP file and return it
         shutil.make_archive(zip_dir, format="zip", root_dir=zip_dir)
 
         return open(f"{zip_dir}.zip", "rb")
 
-    elif kwargs["accept"] == "image/*":
-        filepath = kwargs["demo_image"].filename
+    # elif kwargs["accept"] == "image/*":
+    #     filepath = kwargs["demo_image"].filename
 
-        return open(filepath, "rb")
+    #     return open(filepath, "rb")
 
 
 # Schema to validate the `predict()` output if accept field is "application/json"
@@ -287,15 +288,15 @@ schema = {
     "demo_bool": fields.Bool(),
     "demo_dict": fields.Dict(),
     "demo_list_of_floats": fields.List(fields.Float()),
-    "demo_image": fields.Str(
-        description="image"  # description needed to be parsed by UI
-    ),
-    "demo_audio": fields.Str(
-        description="audio"  # description needed to be parsed by UI
-    ),
-    "demo_video": fields.Str(
-        description="video"  # description needed to be parsed by UI
-    ),
+    # "demo_image": fields.Str(
+    #     description="image"  # description needed to be parsed by UI
+    # ),
+    # "demo_audio": fields.Str(
+    #     description="audio"  # description needed to be parsed by UI
+    # ),
+    # "demo_video": fields.Str(
+    #     description="video"  # description needed to be parsed by UI
+    # ),
     "labels": fields.List(fields.Str()),
     "probabilities": fields.List(fields.Float()),
     "accept": fields.Str(),
