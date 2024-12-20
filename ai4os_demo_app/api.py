@@ -104,7 +104,9 @@ def train(**kwargs):
     for epoch in range(kwargs["epoch_num"]):
         time.sleep(1.0)
         writer.add_scalar(  # fake loss with random noise
-            "scalars/loss", -math.log(epoch + 1) * (1 + random() * 0.2), epoch  # nosec
+            "scalars/loss",
+            -math.log(epoch + 1) * (1 + random() * 0.2),
+            epoch,  # nosec
         )
         writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
             "scalars/accuracy",
@@ -138,6 +140,13 @@ def get_predict_args():
             missing="choice2",
             enum=["choice1", "choice2"],
             description="test multi-choice with strings",
+        ),
+        "demo_password": fields.String(
+            required=False,
+            missing="some-string",
+            validate=validate.Length(min=1),
+            load_only=True,
+            metadata={"format": "password"},
         ),
         "demo_int": fields.Int(
             required=False,
@@ -281,6 +290,11 @@ def predict(**kwargs):
 schema = {
     "demo_str": fields.Str(),
     "demo_str_choice": fields.Str(),
+    "demo_password": fields.Str(
+        metadata={
+            "format": "password",
+        },
+    ),
     "demo_int": fields.Int(),
     "demo_int_range": fields.Int(),
     "demo_float": fields.Float(),
