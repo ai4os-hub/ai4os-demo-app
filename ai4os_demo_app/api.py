@@ -105,8 +105,8 @@ def train(**kwargs):
         time.sleep(1.0)
         writer.add_scalar(  # fake loss with random noise
             "scalars/loss",
-            -math.log(epoch + 1) * (1 + random() * 0.2),
-            epoch,  # nosec
+            -math.log(epoch + 1) * (1 + random() * 0.2),  # nosec
+            epoch,
         )
         writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
             "scalars/accuracy",
