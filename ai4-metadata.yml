@@ -45,8 +45,8 @@ data-type:
 resources:
   inference:
     cpu: 2
-    gpu: 0
+    gpu: 1
     memory_MB: 1000
-    gpu_memory_MB: 0
-    gpu_compute_capability: 0.0
+    gpu_memory_MB: 1000
+    gpu_compute_capability: 1.0
     storage_MB: 1000
