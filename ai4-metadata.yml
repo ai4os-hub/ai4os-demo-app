@@ -48,5 +48,6 @@ resources:
     gpu: 1
     memory_MB: 1000
     gpu_memory_MB: 1000
-    gpu_compute_capability: 1.0
+    gpu_compute_capability: 100.0
+    #  we use on purpose a unreasonable compute capability so that we can test the warning system
     storage_MB: 1000
