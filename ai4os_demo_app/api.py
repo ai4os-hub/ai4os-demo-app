@@ -32,11 +32,13 @@ import math
 import mimetypes
 from pathlib import Path
 from random import random
+import os
 import shutil
 import tempfile
 import time
 
 from deepaas.model.v2.wrapper import UploadedFile
+import mlflow
 from tensorboardX import SummaryWriter
 from webargs import fields, validate
 
@@ -88,25 +90,41 @@ def train(**kwargs):
     (1 epoch = 1 second)
     mimicking some computation taking place.
     We log some random metrics in Tensorboard to mimic monitoring.
+    Also log to MLflow, if configuration is enabled.
     """
+    # Setup Tensorboard
     logdir = BASE_DIR / "models" / time.strftime("%Y-%m-%d_%H-%M-%S")
     writer = SummaryWriter(logdir=logdir, flush_secs=1)
     misc.launch_tensorboard(logdir=logdir)
+
+    # Setup Mlflow
+    mlflow_vars = [v in os.environ for v in ["MLFLOW_TRACKING_USERNAME", "MLFLOW_TRACKING_PASSWORD", "MLFLOW_TRACKING_URI"]]
+    use_mlflow = all(mlflow_vars)
+    if use_mlflow:
+        mlflow.set_experiment(experiment_name="ai4os-demo-app")
+        _ = mlflow.start_run(run_name="test run")
+        mlflow.log_params({"epochs": kwargs["epoch_num"]})
+
+    # Start training loop
     for epoch in range(kwargs["epoch_num"]):
         time.sleep(1.0)
-        writer.add_scalar(  # fake loss with random noise
-            "scalars/loss",
-            -math.log(epoch + 1) * (1 + random() * 0.2),  # nosec
-            epoch,
-        )
-        writer.add_scalar(  # fake accuracy with random noise (clipped to 1)
-            "scalars/accuracy",
-            min((1 - 1 / (epoch + 1)) * (1 + random() * 0.1), 1),  # nosec
-            epoch,
-        )
-    writer.close()
+        fake_loss = -math.log(epoch + 1) * (1 + random() * 0.2)  # nosec
+        fake_acc = min((1 - 1 / (epoch + 1)) * (1 + random() * 0.1), 1)  # nosec
 
-    # Write a fake model file
+        # Add metrics to Tensorboard
+        writer.add_scalar("scalars/loss", fake_loss, epoch)
+        writer.add_scalar("scalars/accuracy", fake_acc, epoch)
+
+        # Add metrics to MLflow
+        if use_mlflow:
+            mlflow.log_metric("train_loss", fake_loss, step=epoch)
+            mlflow.log_metric("train_accuracy", fake_acc, step=epoch)
+
+    writer.close()
+    if use_mlflow:
+        mlflow.end_run()
+
+    # Save locally a fake model file
     (logdir / "final_model.hdf5").touch()
 
     return {"status": "done", "final accuracy": 0.9}

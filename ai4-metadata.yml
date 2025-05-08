@@ -20,7 +20,9 @@ doi: https://doi.org/10.5281/zenodo.13343448
 dates:
   created: '2024-03-26'
   updated: '2024-08-12'
-experiment_id: f4b9c17a-1077-11f0-9e04-0242ac120002
+provenance:
+  nomad_job: f4b9c17a-1077-11f0-9e04-0242ac120002
+  mlflow_run: 5e96fe940dca470aa7d6c16620e82c35
 links:
   documentation: http://add-some-documentation.com
   source_code: https://github.com/ai4os-hub/ai4os-demo-app
