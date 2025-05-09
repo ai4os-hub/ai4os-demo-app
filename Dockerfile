@@ -61,6 +61,10 @@ RUN git clone https://github.com/ai4os/deep-start /srv/.deep-start && \
 # Necessary for the Jupyter Lab terminal
 ENV SHELL /bin/bash
 
+# # Test local installation
+# COPY . /srv/ai4os-demo-app
+# RUN pip3 install --no-cache-dir -e /srv/ai4os-demo-app
+
 # Install user app
 RUN git clone -b $branch https://github.com/ai4os-hub/ai4os-demo-app && \
     cd  ai4os-demo-app && \
