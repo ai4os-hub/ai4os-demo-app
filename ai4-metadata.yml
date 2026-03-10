@@ -32,20 +32,21 @@ links:
   weights: http://add-some-weights-url.com
   citation: https://doi.org/10.5281/zenodo.13343448
   base_model: http://add-some-link-to-another-model.com
+  zenodo_doi: https://doi.org/10.5281/zenodo.18943562
 tags:
-  - demo
-  - general purpose
-  - vo.imagine-ai.eu
+- demo
+- general purpose
+- vo.imagine-ai.eu
 tasks:
-  - Other
+- Other
 categories:
-  - AI4 trainable
-  - AI4 pre trained
-  - AI4 inference
+- AI4 trainable
+- AI4 pre trained
+- AI4 inference
 libraries:
-  - Other
+- Other
 data-type:
-  - Other
+- Other
 resources:
   inference:
     cpu: 2
@@ -53,5 +54,4 @@ resources:
     memory_MB: 1000
     gpu_memory_MB: 1000
     gpu_compute_capability: 100.0
-    #  we use on purpose a unreasonable compute capability so that we can test the warning system
     storage_MB: 1000
